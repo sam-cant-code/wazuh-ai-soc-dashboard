@@ -1,0 +1,14 @@
+# Python internals
+__pycache__/
+*.py[cod]
+
+# Virtual Environment
+venv/
+env/
+
+# Environment variables & secrets (if you add them later)
+.env
+
+# Editor settings
+.vscode/
+.idea/

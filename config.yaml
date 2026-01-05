@@ -1,0 +1,68 @@
+# config.yaml
+# Configuration for Lightweight SIEM Dashboard
+
+# Alert file location
+# For local testing: use relative path
+# For production Wazuh: use absolute path
+alert_file: "tests/alerts.json"
+# Production examples:
+# Linux: "/var/ossec/logs/alerts/alerts.json"
+# Windows: "C:/Program Files (x86)/ossec-agent/logs/alerts/alerts.json"
+
+# Cache settings
+cache:
+  max_size: 10000  # Maximum number of alerts in memory
+  load_hours: 24   # Hours of historical alerts to load on startup
+
+# Server settings
+server:
+  host: "0.0.0.0"
+  port: 8000
+  reload: true   # Enable auto-reload in development (set false in production)
+  workers: 1     # Number of worker processes (increase for production, e.g. 4)
+
+# CORS settings (for frontend access)
+cors:
+  enabled: true
+  origins:
+    - "http://localhost:3000"      # React dev server (Create React App)
+    - "http://localhost:5173"      # Vite dev server
+    - "http://127.0.0.1:3000"
+    - "http://127.0.0.1:5173"
+  allow_credentials: true
+  allow_methods: ["*"]
+  allow_headers: ["*"]
+
+# Logging configuration
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: null     # Set to file path to enable file logging (e.g., "logs/siem-dashboard.log")
+  
+# API settings
+api:
+  max_page_size: 1000             # Maximum alerts per page
+  default_page_size: 100          # Default alerts per page
+  default_timeline_interval: "1h" # Default timeline interval (1m, 5m, 15m, 1h, 6h, 1d)
+  enable_docs: true               # Enable Swagger UI and ReDoc at /docs
+
+# Performance settings
+performance:
+  parse_reverse: true              # Parse alerts file from newest first
+  index_refresh_interval: 300      # Seconds between index rebuilds (0 = disabled)
+
+# Feature flags
+features:
+  real_time_streaming: false  # WebSocket for real-time alerts
+  file_watching: false         # Watch alerts.json for changes
+  export_csv: true            # Enable CSV export
+  export_json: true           # Enable JSON export
+
+# AI Modules (disabled - not implemented in this version)
+ai_modules:
+  clustering:
+    enabled: false
+  risk_scoring:
+    enabled: false
+  summarization:
+    enabled: false
